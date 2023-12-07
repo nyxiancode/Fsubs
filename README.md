@@ -1,8 +1,8 @@
-# File-Sharing
+# File-Sharing 4 Button
 
 Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link Khusus.
 
-<img src="https://telegra.ph/file/c628278158186a91644c5.jpg">
+<img src="https://telegra.ph/file/767a8576f4f688fb5cb44.png">
 
 
 ### Setup Repo ini join 4 ch ngentod
@@ -14,17 +14,13 @@ Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link K
 ##
 ### Installation
 #### Deploy on Heroku
-<p align="center"><a href="https://heroku.com/deploy?template=https://github.com/ReyyNada/ReyyFileSharing4"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blue?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
+<p align="center"><a href="https://rea.my.id/deploy/"> <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-blue?style=for-the-badge&logo=heroku" width="220" height="38.45"/></a></p>
 
 
-**Tonton Video Tutorial Ini di YouTube untuk Bantuan memasang di Heroku**<br>
-<a href="https://youtu.be/O2tieQgzYZg">
-  <img src="https://img.shields.io/badge/How%20to-Deploy-red?logo=youtube" width="147">
-</a><br>
 
 #### Deploy in your VPS
 ````bash
-git clone https://github.com/ReyyNada/ReyyFileSharing4 
+git clone https://github.com/reasupport/4tombol 
 cd ReyyFileSharing4
 pip3 install -r requirements.txt
 # <Create config.py appropriately>
@@ -83,7 +79,7 @@ python3 main.py
 
 
 ## Support   
-Bergabunglah di [Group Telegram ](https://www.telegram.dog/pantekyks) Untuk Dukungan/Bantuan Dan Join [Channel](https://www.telegram.dog/mahadappa) untu info Update bot.   
+Bergabunglah di [Group Telegram ](https://www.telegram.dog/slut_id) Untuk Dukungan/Bantuan Dan Join [Channel](https://www.telegram.dog/reasupport) untu info Update bot.   
    
 Laporkan Bug, Berikan Permintaan Fitur Di sana.. 
 
