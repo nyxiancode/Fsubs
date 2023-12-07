@@ -20,10 +20,16 @@ Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link K
 
 #### Deploy in your VPS
 ````bash
-git clone https://github.com/reasupport/4tombol 
+git clone https://github.com/reasupport/4tombol
+````
+````bash
 cd 4tombol
+````
+````bash
 pip3 install -r requirements.txt
+````
 # <Create config.py appropriately>
+````bash
 python3 main.py
 ````
 
