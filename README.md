@@ -28,7 +28,9 @@ cd 4tombol
 ````bash
 pip3 install -r requirements.txt
 ````
-# <Create config.py appropriately>
+
+## <Create config.py appropriately>
+
 ````bash
 python3 main.py
 ````
