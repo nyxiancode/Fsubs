@@ -25,7 +25,7 @@ class Data:
 
 👨‍💻 Develoved by </b><a href='https://t.me/ReaSupport'><b>ReaSupport</b></a>
 
-Sumber: @Lunatic0de & @Mahadappa
+
 """
 
     close = [
