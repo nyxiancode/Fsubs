@@ -9,7 +9,7 @@
     "sharing"
   ],
   "repository": "https://github.com/reasupport/4tombol",
-  "logo": "https://rea.my.id/img/logohd.png",
+  "logo": "https://rea.my.id/img/logohd.jpg",
   "env": {
     "TG_BOT_TOKEN": {
       "description": "Masukan Bot token, Dapatkan dari t.me/BotFather",
