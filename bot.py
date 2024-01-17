@@ -3,9 +3,9 @@
 # Kalo clone Gak usah hapus 
 # gue tandain akun tele nya ngentod
 
-import pyromod.listen
+import os
 import sys
-
+import asyncio
 from pyrogram import Client
 
 from config import (
@@ -37,6 +37,13 @@ class Bot(Client):
 
     async def start(self):
         await super().start()
+
+        # Menyesuaikan zona waktu
+        os.environ["TZ"] = "UTC"
+        sys.stdout.write('Setting timezone to UTC\n')
+        sys.stdout.flush()
+        await asyncio.sleep(2)  # Tunggu sejenak agar perubahan waktu berlaku
+
         usr_bot_me = await self.get_me()
 
         if FORCE_SUB_CHANNEL1:
