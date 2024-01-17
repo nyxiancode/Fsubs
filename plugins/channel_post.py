@@ -1,8 +1,6 @@
 # (©)Codexbotz
-# Recode By @Mafia_Tobatz
-# Kalo clone Gak usah hapus 
-# gue tandain akun tele nya ngentod
-
+# Recode by @mrismanaziz
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import asyncio
 
@@ -11,7 +9,7 @@ from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from bot import Bot
-from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON
+from config import ADMINS, CHANNEL_ID, DISABLE_CHANNEL_BUTTON, LOGGER
 from helper_func import encode
 
 
@@ -19,7 +17,24 @@ from helper_func import encode
     filters.private
     & filters.user(ADMINS)
     & ~filters.command(
-        ["start", "users", "broadcast", "ping", "uptime", "batch", "genlink", "id", "logs", "update", "setvar", "delvar", "getvar", "vars"]
+        [
+            "start",
+            "users",
+            "broadcast",
+            "ping",
+            "uptime",
+            "batch",
+            "logs",
+            "genlink",
+            "delvar",
+            "getvar",
+            "setvar",
+            "speedtest",
+            "update",
+            "stats",
+            "vars",
+            "id",
+        ]
     )
 )
 async def channel_post(client: Client, message: Message):
@@ -34,10 +49,10 @@ async def channel_post(client: Client, message: Message):
             chat_id=client.db_channel.id, disable_notification=True
         )
     except Exception as e:
-        print(e)
+        LOGGER(__name__).warning(e)
         await reply_text.edit_text("<b>Telah Terjadi Error...</b>")
         return
-    converted_id = post_message.message_id * abs(client.db_channel.id)
+    converted_id = post_message.id * abs(client.db_channel.id)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
@@ -59,18 +74,19 @@ async def channel_post(client: Client, message: Message):
     )
 
     if not DISABLE_CHANNEL_BUTTON:
-        await post_message.edit_reply_markup(reply_markup)
+        try:
+            await post_message.edit_reply_markup(reply_markup)
+        except Exception:
+            pass
 
 
-@Bot.on_message(
-    filters.channel & filters.incoming & filters.chat(CHANNEL_ID) & ~filters.edited
-)
+@Bot.on_message(filters.channel & filters.incoming & filters.chat(CHANNEL_ID))
 async def new_post(client: Client, message: Message):
 
     if DISABLE_CHANNEL_BUTTON:
         return
 
-    converted_id = message.message_id * abs(client.db_channel.id)
+    converted_id = message.id * abs(client.db_channel.id)
     string = f"get-{converted_id}"
     base64_string = await encode(string)
     link = f"https://t.me/{client.username}?start={base64_string}"
@@ -85,5 +101,5 @@ async def new_post(client: Client, message: Message):
     )
     try:
         await message.edit_reply_markup(reply_markup)
-    except Exception as e:
-        print(e)
+    except Exception:
+        pass
