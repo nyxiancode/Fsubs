@@ -47,7 +47,7 @@ async def get_bot_logs(client: Bot, m: Message):
 
 @Bot.on_message(filters.command("vars") & filters.user(ADMINS))
 async def varsFunc(client: Bot, message: Message):
-    Man = await message.reply_text("Tunggu Sebentar...")
+    Man = await message.reply_text("Tunggu Sebentar...", parse_mode="markdown")
     text = f"""<u><b>CONFIG VARS</b></u> @{client.username}
 APP_ID = <code>{APP_ID}</code>
 API_HASH = <code>{API_HASH}</code>
