@@ -1,10 +1,3 @@
-# (©)Codexbotz
-# Recode By Zaen @Mafia_Tobatz
-# Recode By Dappa @mahadappa
-# Kalo clone Gak usah hapus 
-# gue tandain akun tele nya ngentod
-
-
 import asyncio
 from datetime import datetime
 from time import time
@@ -125,8 +118,8 @@ async def start_command(client: Bot, message: Message):
     else:
         buttons = [
                 [
-                    InlineKeyboardButton("Cara Penggunaan", callback_data = "help"),
-                    InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data = "close")
+                    InlineKeyboardButton("Cara Penggunaan", callback_data="help"),
+                    InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close")
                 ]
             ]
         await message.reply_text(
@@ -142,13 +135,12 @@ async def start_command(client: Bot, message: Message):
             reply_markup=InlineKeyboardMarkup(buttons),
             disable_web_page_preview=True,
             quote=True,
+            parse_mode="html",
         )
 
     return
 
 
-    
-    
 @Bot.on_message(filters.command("start") & filters.private)
 async def not_joined(client: Client, message: Message):
     buttons = [
@@ -186,6 +178,7 @@ async def not_joined(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(buttons),
         quote=True,
         disable_web_page_preview=True,
+        parse_mode="html",
     )
 
 
