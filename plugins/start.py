@@ -178,8 +178,9 @@ async def not_joined(client: Client, message: Message):
         reply_markup=InlineKeyboardMarkup(buttons),
         quote=True,
         disable_web_page_preview=True,
-        parse_mode="html",
+        parse_mode="markdown"  # Ganti "html" dengan "markdown" di sini
     )
+
 
 
 @Bot.on_message(filters.command("users") & filters.private & filters.user(ADMINS))
