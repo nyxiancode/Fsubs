@@ -63,7 +63,7 @@ async def channel_post(client: Client, message: Message):
 
 
 @Bot.on_message(
-    filters.channel & filters.incoming & filters.chat(CHANNEL_ID) & ~filters.edited
+    filters.channel & filters.incoming & filters.chat(CHANNEL_ID) & ~filters.forwarded
 )
 async def new_post(client: Client, message: Message):
 
