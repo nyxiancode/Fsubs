@@ -27,7 +27,6 @@ from config import (
 from pyrogram import filters
 from pyrogram.types import Message
 
-
 @Bot.on_message(filters.command("logs") & filters.user(ADMINS))
 async def get_bot_logs(client: Bot, m: Message):
     bot_log_path = "logs.txt"
@@ -44,10 +43,9 @@ async def get_bot_logs(client: Bot, m: Message):
     elif not os.path.exists(bot_log_path):
         await m.reply_text("❌ <b>Tidak ada log yang ditemukan!</b>")
 
-
 @Bot.on_message(filters.command("vars") & filters.user(ADMINS))
 async def varsFunc(client: Bot, message: Message):
-    Man = await message.reply_text("Tunggu Sebentar...", parse_mode="None")
+    Man = await message.reply_text("Tunggu Sebentar...", parse_mode=None)
     text = f"""<u><b>CONFIG VARS</b></u> @{client.username}
 APP_ID = <code>{APP_ID}</code>
 API_HASH = <code>{API_HASH}</code>
