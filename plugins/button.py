@@ -7,45 +7,26 @@ from pyrogram.types import InlineKeyboardButton
 
 def start_button(client):
     buttons = [
-        [
-            InlineKeyboardButton(text="Invitelink", url=client.invitelink),
-            InlineKeyboardButton(text="Invitelink2", url=client.invitelink2),
-        ],
-        [
-            InlineKeyboardButton(text="Invitelink3", url=client.invitelink3),
-            InlineKeyboardButton(text="Invitelink4", url=client.invitelink4),
-        ],
-        [
-            InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            InlineKeyboardButton(text="Close", callback_data="close"),
-        ],
+        [InlineKeyboardButton(text="Invitelink", url=client.invitelink)],
+        [InlineKeyboardButton(text="Invitelink2", url=client.invitelink2)],
+        [InlineKeyboardButton(text="Invitelink3", url=client.invitelink3)],
+        [InlineKeyboardButton(text="Invitelink4", url=client.invitelink4)],
+        [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help"),
+         InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
     ]
     return buttons
 
 def fsub_button(client, message):
     buttons = [
-        [
-            InlineKeyboardButton(text="Invitelink", url=client.invitelink),
-            InlineKeyboardButton(text="Invitelink2", url=client.invitelink2),
-        ],
-        [
-            InlineKeyboardButton(text="Invitelink3", url=client.invitelink3),
-            InlineKeyboardButton(text="Invitelink4", url=client.invitelink4),
-        ],
-        [
-            InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            InlineKeyboardButton(text="Close", callback_data="close"),
-        ],
+        [InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)],
+        [InlineKeyboardButton(text="ᴄᴏʙᴀ ʟᴀɢɪ", url=f"https://t.me/{client.username}?start={message.command[1]}")],
+        [InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink)],
+        [InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)],
+        [InlineKeyboardButton(text="ᴄᴏʙᴀ ʟᴀɢɪ", url=f"https://t.me/{client.username}?start={message.command[1]}")],
+        [InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)],
+        [InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3)],
+        [InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)],
+        [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help"),
+         InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
     ]
-    try:
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text="Coba Lagi",
-                    url=f"https://t.me/{client.username}?start={message.command[1]}",
-                )
-            ]
-        )
-    except IndexError:
-        pass
     return buttons
