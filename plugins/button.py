@@ -6,129 +6,51 @@ from config import FORCE_SUB_CHANNEL, FORCE_SUB_GROUP, FORCE_SUB_CHANNEL_2, FORC
 from pyrogram.types import InlineKeyboardButton
 
 def start_button(client):
-    if not FORCE_SUB_CHANNEL and not FORCE_SUB_GROUP:
-        buttons = [
-            [
-                InlineKeyboardButton(text="Invite Link", url=client.invitelink),
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            ],
-            [InlineKeyboardButton(text="Close", callback_data="close")],
-        ]
-        return buttons
-    if not FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
-        buttons = [
-            [InlineKeyboardButton(text="Group", url=client.invitelink2)],
-            [
-                InlineKeyboardButton(text="Invite Link", url=client.invitelink),
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            ],
-            [InlineKeyboardButton(text="Close", callback_data="close")],
-        ]
-        return buttons
-    if FORCE_SUB_CHANNEL and not FORCE_SUB_GROUP:
-        buttons = [
-            [InlineKeyboardButton(text="Channel", url=client.invitelink)],
-            [
-                InlineKeyboardButton(text="Invite Link", url=client.invitelink),
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            ],
-            [InlineKeyboardButton(text="Close", callback_data="close")],
-        ]
-        return buttons
-    if FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
-        buttons = [
-            [
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            ],
-            [
-                InlineKeyboardButton(text="Channel", url=client.invitelink),
-                InlineKeyboardButton(text="Group", url=client.invitelink2),
-            ],
-            [InlineKeyboardButton(text="Close", callback_data="close")],
-        ]
-        return buttons
+    buttons = []
 
+    if FORCE_SUB_CHANNEL:
+        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink)])
+    if FORCE_SUB_GROUP:
+        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink2)])
+    if FORCE_SUB_CHANNEL_2:
+        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3)])
+    if FORCE_SUB_GROUP_2:
+        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+
+    buttons.extend([
+        [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help")],
+        [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
+    ])
+
+    return buttons
 
 def fsub_button(client, message):
-    if not FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
-        buttons = [
-            [InlineKeyboardButton(text="Join Group", url=client.invitelink2)],
-        ]
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton(
-                        text="Try Again",
-                        url=f"https://t.me/{client.username}?start={message.command[1]}",
-                    )
-                ]
-            )
-        except IndexError:
-            pass
-        return buttons
-    if FORCE_SUB_CHANNEL and not FORCE_SUB_GROUP:
-        buttons = [
-            [InlineKeyboardButton(text="Join Channel", url=client.invitelink)],
-        ]
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton(
-                        text="Try Again",
-                        url=f"https://t.me/{client.username}?start={message.command[1]}",
-                    )
-                ]
-            )
-        except IndexError:
-            pass
-        return buttons
-    if FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
-        buttons = [
-            [
-                InlineKeyboardButton(text="Join Channel", url=client.invitelink),
-                InlineKeyboardButton(text="Join Group", url=client.invitelink2),
-            ],
-        ]
-        try:
-            buttons.append(
-                [
-                    InlineKeyboardButton(
-                        text="Try Again",
-                        url=f"https://t.me/{client.username}?start={message.command[1]}",
-                    )
-                ]
-            )
-        except IndexError:
-            pass
-        return buttons
+    buttons = []
 
-    if not FORCE_SUB_CHANNEL_2 and FORCE_SUB_GROUP_2:
-        buttons = [
-            [InlineKeyboardButton(text="Group", url=client.invitelink4)],
-            [
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-                InlineKeyboardButton(text="Close", callback_data="close"),
-            ],
-        ]
-        return buttons
-    if FORCE_SUB_CHANNEL_2 and not FORCE_SUB_GROUP_2:
-        buttons = [
-            [InlineKeyboardButton(text="Channel", url=client.invitelink3)],
-            [
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-                InlineKeyboardButton(text="Close", callback_data="close"),
-            ],
-        ]
-        return buttons
+    if FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink),
+                        InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)])
+    elif FORCE_SUB_CHANNEL:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink)])
+    elif FORCE_SUB_GROUP:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)])
+
     if FORCE_SUB_CHANNEL_2 and FORCE_SUB_GROUP_2:
-        buttons = [
-            [
-                InlineKeyboardButton(text="Help & Commands", callback_data="help"),
-            ],
-            [
-                InlineKeyboardButton(text="Channel", url=client.invitelink3),
-                InlineKeyboardButton(text="Group", url=client.invitelink4),
-            ],
-            [InlineKeyboardButton(text="Close", callback_data="close")],
-        ]
-        return buttons
+        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3),
+                        InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+    elif FORCE_SUB_CHANNEL_2:
+        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3)])
+    elif FORCE_SUB_GROUP_2:
+        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+
+    buttons.extend([
+        [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
+    ])
+
+    try:
+        buttons.append([InlineKeyboardButton(text="ᴄᴏʙᴀ ʟᴀɢɪ",
+                                              url=f"https://t.me/{client.username}?start={message.command[1]}")])
+    except IndexError:
+        pass
+
+    return buttons
