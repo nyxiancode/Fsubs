@@ -5,7 +5,7 @@
 import pyromod.listen
 import sys
 
-from pyrogram import Client, enums
+from pyrogram import Client, filters, enums
 
 from config import (
     API_HASH,
@@ -53,28 +53,28 @@ class Bot(Client):
         try:
             if FORCE_SUB_CHANNEL:
                 info = await self.get_chat(FORCE_SUB_CHANNEL)
-                link = await self.get_chat_invite_link(info.id)
+                link = await self.export_chat_invite_link(info.id)
                 self.invitelink = link
                 self.LOGGER(__name__).info(
                     f"FORCE_SUB_CHANNEL detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
                 )
             if FORCE_SUB_GROUP:
                 info = await self.get_chat(FORCE_SUB_GROUP)
-                link = await self.get_chat_invite_link(info.id)
+                link = await self.export_chat_invite_link(info.id)
                 self.invitelink2 = link
                 self.LOGGER(__name__).info(
                     f"FORCE_SUB_GROUP detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
                 )
             if FORCE_SUB_CHANNEL_2:
                 info = await self.get_chat(FORCE_SUB_CHANNEL_2)
-                link = await self.get_chat_invite_link(info.id)
+                link = await self.export_chat_invite_link(info.id)
                 self.invitelink3 = link
                 self.LOGGER(__name__).info(
                     f"FORCE_SUB_CHANNEL_2 detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
                 )
             if FORCE_SUB_GROUP_2:
                 info = await self.get_chat(FORCE_SUB_GROUP_2)
-                link = await self.get_chat_invite_link(info.id)
+                link = await self.export_chat_invite_link(info.id)
                 self.invitelink4 = link
                 self.LOGGER(__name__).info(
                     f"FORCE_SUB_GROUP_2 detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
