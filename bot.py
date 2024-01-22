@@ -1,5 +1,5 @@
 # (©)Codexbotz
-# Recode by @mrismanaziz & @Kutmut_ID
+# Recode by @mrismanaziz
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 import pyromod.listen
@@ -98,7 +98,6 @@ class Bot(Client):
                 )
                 sys.exit()
 
-        # NEW CODE: Check FORCE_SUB_CHANNEL_2 and FORCE_SUB_GROUP_2
         if FORCE_SUB_CHANNEL_2:
             try:
                 info = await self.get_chat(FORCE_SUB_CHANNEL_2)
@@ -116,7 +115,7 @@ class Bot(Client):
                     "Bot tidak dapat Mengambil link invite dari FORCE_SUB_CHANNEL_2!"
                 )
                 self.LOGGER(__name__).warning(
-                    f"Pastikan @{self.username} adalah admin di Channel Tersebut, Chat ID F-Subs Channel Saat Ini: {FORCE_SUB_CHANNEL_2}"
+                    f"Pastikan @{self.username} adalah admin di Channel Tersebut, Chat ID F-Subs Channel 2 Saat Ini: {FORCE_SUB_CHANNEL_2}"
                 )
                 self.LOGGER(__name__).info(
                     "Bot Berhenti. Gabung Group https://t.me/SharingUserbot untuk Bantuan"
@@ -140,7 +139,7 @@ class Bot(Client):
                     "Bot tidak dapat Mengambil link invite dari FORCE_SUB_GROUP_2!"
                 )
                 self.LOGGER(__name__).warning(
-                    f"Pastikan @{self.username} adalah admin di Group Tersebut, Chat ID F-Subs Group Saat Ini: {FORCE_SUB_GROUP_2}"
+                    f"Pastikan @{self.username} adalah admin di Group Tersebut, Chat ID F-Subs Group 2 Saat Ini: {FORCE_SUB_GROUP_2}"
                 )
                 self.LOGGER(__name__).info(
                     "Bot Berhenti. Gabung Group https://t.me/SharingUserbot untuk Bantuan"
@@ -167,4 +166,9 @@ class Bot(Client):
 
         self.set_parse_mode(enums.ParseMode.HTML)
         self.LOGGER(__name__).info(
-            f"[🔥 BERHASIL DIAKTIFKAN! 🔥]\n\n
+            f"[🔥 BERHASIL DIAKTIFKAN! 🔥]\n\nBOT Dibuat oleh @{OWNER}\nJika @{OWNER} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
+        )
+
+    async def stop(self, *args):
+        await super().stop()
+        self.LOGGER(__name__).info("Bot stopped.")
