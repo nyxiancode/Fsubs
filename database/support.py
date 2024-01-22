@@ -1,8 +1,6 @@
 # (©)Codexbotz
-# Recode By @Mafia_Tobatz
-# Kalo clone Gak usah hapus 
-# gue tandain akun tele nya ngentod
-
+# Recode by @mrismanaziz
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import asyncio
 
