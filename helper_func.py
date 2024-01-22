@@ -4,7 +4,6 @@ import re
 
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
-from pyrogram.errors import FloodWait
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
 from config import ADMINS, FORCE_SUB_CHANNEL, FORCE_SUB_GROUP, FORCE_SUB_CHANNEL_2, FORCE_SUB_GROUP_2
@@ -20,9 +19,27 @@ async def subschannel(filter, client, update):
         member = await client.get_chat_member(
             chat_id=FORCE_SUB_CHANNEL, user_id=user_id
         )
-        member2 = await client.subschannel2(
+        member2 = await client.get_chat_member(
             chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id
         )
+    except UserNotParticipant:
+        return False
+
+    return (
+        member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+        or member2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+    )
+
+
+async def subsgroup(filter, client, update):
+    if not FORCE_SUB_GROUP and not FORCE_SUB_GROUP_2:
+        return True
+    user_id = update.from_user.id
+    if user_id in ADMINS:
+        return True
+    try:
+        member = await client.get_chat_member(chat_id=FORCE_SUB_GROUP, user_id=user_id)
+        member2 = await client.get_chat_member(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
     except UserNotParticipant:
         return False
 
@@ -39,31 +56,13 @@ async def subschannel2(filter, client, update):
     if user_id in ADMINS:
         return True
     try:
-        member2 = await client.subschannel2(
+        member2 = await client.get_chat_member(
             chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id
         )
     except UserNotParticipant:
         return False
 
     return member2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
-
-
-async def subsgroup(filter, client, update):
-    if not FORCE_SUB_GROUP and not FORCE_SUB_GROUP_2:
-        return True
-    user_id = update.from_user.id
-    if user_id in ADMINS:
-        return True
-    try:
-        member = await client.get_chat_member(chat_id=FORCE_SUB_GROUP, user_id=user_id)
-        member2 = await client.subsgroup2(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
-    except UserNotParticipant:
-        return False
-
-    return (
-        member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
-        or member2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
-    )
 
 
 async def subsgroup2(filter, client, update):
@@ -73,7 +72,7 @@ async def subsgroup2(filter, client, update):
     if user_id in ADMINS:
         return True
     try:
-        member2 = await client.subsgroup2(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
+        member2 = await client.get_chat_member(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
     except UserNotParticipant:
         return False
 
@@ -90,14 +89,14 @@ async def is_subscribed(filter, client, update):
         return True
     try:
         member = await client.get_chat_member(chat_id=FORCE_SUB_GROUP, user_id=user_id)
-        member2 = await client.subschannel2(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
+        member2 = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
     except UserNotParticipant:
         return False
     try:
         member = await client.get_chat_member(
             chat_id=FORCE_SUB_CHANNEL, user_id=user_id
         )
-        member2 = await client.subsgroup2(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
+        member2 = await client.get_chat_member(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
     except UserNotParticipant:
         return False
 
@@ -166,6 +165,6 @@ async def get_message_id(client, message):
 
 subsgc = filters.create(subsgroup)
 subsch = filters.create(subschannel)
-subsgc2 = filters.create(subsgroup2)
-subsch2 = filters.create(subschannel2)
+subsgc2 = filters.create(subsgroup2)  # Tambahkan filter untuk FORCE_SUB_GROUP_2
+subsch2 = filters.create(subschannel2)  # Tambahkan filter untuk FORCE_SUB_CHANNEL_2
 subsall = filters.create(is_subscribed)
