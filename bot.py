@@ -1,5 +1,5 @@
 # (©)Codexbotz
-# Recode by @mrismanaziz
+# Recode by @mrismanaziz & @Kutmut_ID
 # t.me/SharingUserbot & t.me/Lunatic0de
 
 import pyromod.listen
