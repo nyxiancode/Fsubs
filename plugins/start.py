@@ -1,29 +1,36 @@
 # (©)Codexbotz
-# Recode By Zaen @Mafia_Tobatz
-# Recode By Dappa @mahadappa
-# Kalo clone Gak usah hapus 
-# gue tandain akun tele nya ngentod
-
+# Recode by @mrismanaziz
+# t.me/SharingUserbot & t.me/Lunatic0de
 
 import asyncio
 from datetime import datetime
 from time import time
 
-from pyrogram import Client, filters
-from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-
 from bot import Bot
-from config import ADMINS, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, FORCE_MSG, START_MSG, PROTECT_CONTENT
-from database.sql import add_user, full_userbase, query_msg
-from helper_func import decode, get_messages, subscribed
+from config import (
+    ADMINS,
+    CUSTOM_CAPTION,
+    DISABLE_CHANNEL_BUTTON,
+    FORCE_MSG,
+    PROTECT_CONTENT,
+    START_MSG,
+)
+from database.sql import add_user, delete_user, full_userbase, query_msg
+from pyrogram import filters
+from pyrogram.enums import ParseMode
+from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked
+from pyrogram.types import InlineKeyboardMarkup, Message
+
+from helper_func import decode, get_messages, subsall, subsch, subsgc
+
+from .button import fsub_button, start_button
 
 START_TIME = datetime.utcnow()
 START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
 TIME_DURATION_UNITS = (
     ("week", 60 * 60 * 24 * 7),
-    ("day", 60 ** 2 * 24),
-    ("hour", 60 ** 2),
+    ("day", 60**2 * 24),
+    ("hour", 60**2),
     ("min", 60),
     ("sec", 1),
 )
@@ -36,11 +43,11 @@ async def _human_time_duration(seconds):
     for unit, div in TIME_DURATION_UNITS:
         amount, seconds = divmod(int(seconds), div)
         if amount > 0:
-            parts.append("{} {}{}".format(amount, unit, "" if amount == 1 else "s"))
+            parts.append(f'{amount} {unit}{"" if amount == 1 else "s"}')
     return ", ".join(parts)
 
 
-@Bot.on_message(filters.command("start") & filters.private & subscribed)
+@Bot.on_message(filters.command("start") & filters.private & subsall & subsch & subsgc)
 async def start_command(client: Bot, message: Message):
     id = message.from_user.id
     user_name = (
@@ -106,7 +113,7 @@ async def start_command(client: Bot, message: Message):
                 await msg.copy(
                     chat_id=message.from_user.id,
                     caption=caption,
-                    parse_mode="html",
+                    parse_mode=ParseMode.HTML,
                     protect_content=PROTECT_CONTENT,
                     reply_markup=reply_markup,
                 )
@@ -116,70 +123,43 @@ async def start_command(client: Bot, message: Message):
                 await msg.copy(
                     chat_id=message.from_user.id,
                     caption=caption,
-                    parse_mode="html",
+                    parse_mode=ParseMode.HTML,
                     protect_content=PROTECT_CONTENT,
                     reply_markup=reply_markup,
                 )
             except BaseException:
                 pass
     else:
-        buttons = [
-                [
-                    InlineKeyboardButton("Cara Penggunaan", callback_data = "help"),
-                    InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data = "close")
-                ]
-            ]
+        out = start_button(client)
         await message.reply_text(
             text=START_MSG.format(
                 first=message.from_user.first_name,
                 last=message.from_user.last_name,
-                username=None
-                if not message.from_user.username
-                else "@" + message.from_user.username,
+                username=f"@{message.from_user.username}"
+                if message.from_user.username
+                else None,
                 mention=message.from_user.mention,
                 id=message.from_user.id,
             ),
-            reply_markup=InlineKeyboardMarkup(buttons),
+            reply_markup=InlineKeyboardMarkup(out),
             disable_web_page_preview=True,
             quote=True,
         )
 
+
     return
 
 
-    
-    
 @Bot.on_message(filters.command("start") & filters.private)
-async def not_joined(client: Client, message: Message):
-    buttons = [
-        [
-            InlineKeyboardButton("•ᴄʜᴀɴᴇʟ•", url=client.invitelink1), 
-            InlineKeyboardButton("•ᴄʜᴀɴᴇʟ•", url=client.invitelink2),
-        ],
-        [
-            InlineKeyboardButton("•ᴄʜᴀɴᴇʟ•", url=client.invitelink3), 
-            InlineKeyboardButton("•ᴄʜᴀɴᴇʟ•", url=client.invitelink4),
-        ],
-    ]
-    try:
-        buttons.append(
-            [
-                InlineKeyboardButton(
-                    text="•ᴄᴏʙᴀ ʟᴀɢɪ•",
-                    url=f"https://t.me/{client.username}?start={message.command[1]}",
-                )
-            ]
-        )
-    except IndexError:
-        pass
-
+async def not_joined(client: Bot, message: Message):
+    buttons = fsub_button(client, message)
     await message.reply(
         text=FORCE_MSG.format(
             first=message.from_user.first_name,
             last=message.from_user.last_name,
-            username=None
-            if not message.from_user.username
-            else "@" + message.from_user.username,
+            username=f"@{message.from_user.username}"
+            if message.from_user.username
+            else None,
             mention=message.from_user.mention,
             id=message.from_user.id,
         ),
@@ -189,7 +169,7 @@ async def not_joined(client: Client, message: Message):
     )
 
 
-@Bot.on_message(filters.command("users") & filters.private & filters.user(ADMINS))
+@Bot.on_message(filters.command(["users", "stats"]) & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
     msg = await client.send_message(
         chat_id=message.chat.id, text="<code>Processing ...</code>"
@@ -198,7 +178,7 @@ async def get_users(client: Bot, message: Message):
     await msg.edit(f"{len(users)} <b>Pengguna menggunakan bot ini</b>")
 
 
-@Bot.on_message(filters.private & filters.command("broadcast") & filters.user(ADMINS))
+@Bot.on_message(filters.command("broadcast") & filters.user(ADMINS))
 async def send_text(client: Bot, message: Message):
     if message.reply_to_message:
         query = await query_msg()
@@ -214,30 +194,30 @@ async def send_text(client: Bot, message: Message):
         )
         for row in query:
             chat_id = int(row[0])
-            try:
-                await broadcast_msg.copy(chat_id)
-                successful += 1
-            except FloodWait as e:
-                await asyncio.sleep(e.x)
-                await broadcast_msg.copy(chat_id)
-                successful += 1
-            except UserIsBlocked:
-                blocked += 1
-            except InputUserDeactivated:
-                deleted += 1
-            except BaseException:
-                unsuccessful += 1
-            total += 1
-
+            if chat_id not in ADMINS:
+                try:
+                    await broadcast_msg.copy(chat_id, protect_content=PROTECT_CONTENT)
+                    successful += 1
+                except FloodWait as e:
+                    await asyncio.sleep(e.x)
+                    await broadcast_msg.copy(chat_id, protect_content=PROTECT_CONTENT)
+                    successful += 1
+                except UserIsBlocked:
+                    await delete_user(chat_id)
+                    blocked += 1
+                except InputUserDeactivated:
+                    await delete_user(chat_id)
+                    deleted += 1
+                except BaseException:
+                    unsuccessful += 1
+                total += 1
         status = f"""<b><u>Berhasil Broadcast</u>
 Jumlah Pengguna: <code>{total}</code>
 Berhasil: <code>{successful}</code>
 Gagal: <code>{unsuccessful}</code>
 Pengguna diblokir: <code>{blocked}</code>
 Akun Terhapus: <code>{deleted}</code></b>"""
-
         return await pls_wait.edit(status)
-
     else:
         msg = await message.reply(
             "<code>Gunakan Perintah ini Harus Sambil Reply ke pesan telegram yang ingin di Broadcast.</code>"
