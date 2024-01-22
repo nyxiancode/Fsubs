@@ -1,15 +1,15 @@
 {
-  "name": "ReaFsub4",
+  "name": "4Tombol",
   "description": "BOT Multi Force Subs File Sharing Bot berguna untuk menyimpan file dan dapat diakses melalui link khusus",
+  "stack": "heroku-22",
   "keywords": [
     "telegram",
     "file",
-    "reasupport",
-    "reafsub",
-    "sharing"
+    "sharing",
+    "bot",
+    "asupan"
   ],
-  "repository": "https://github.com/reasupport/4tombol",
-  "logo": "https://rea.my.id/img/logohd.jpg",
+  "logo": "https://camo.githubusercontent.com/0104d962cfd02ea2c0497f4ebd90920c39890f22f9ecdca90497b988a519b3be/68747470733a2f2f74656c656772612e70682f66696c652f3736376138353736663466363838666235636234342e706e67",
   "env": {
     "TG_BOT_TOKEN": {
       "description": "Masukan Bot token, Dapatkan dari t.me/BotFather",
@@ -19,41 +19,41 @@
       "description": "Masukan Username Telegram untuk Owner BOT [ Jangan Pake @ ]",
       "value": ""
     },
-    "OWNER_ID": {
-      "description": "Masukan User ID Telegram untuk Owner BOT",
-      "value": ""
-    },
     "ADMINS": {
-      "description": "Masukan User ID untuk mendapatkan hak Admin BOT [Hanya dapat membuat link]",
-      "value": ""
+      "description": "Masukan User ID untuk mendapatkan hak Admin di BOT [ Gunakan Spasi Untuk Pemisah User ID ]",
+      "value": "0"
     },
     "APP_ID": {
       "description": "Dapatkan APP ID di web my.telegram.org",
-      "value": ""
+      "value": "6"
     },
     "API_HASH": {
       "description": "Dapatkan API HASH di web my.telegram.org",
-      "value": ""
+      "value": "eb06d4abfb49dc3eeb1aeb98ae0f581e"
     },
     "CHANNEL_ID": {
       "description": "Masukan ID Channel Untuk [Channel Database]",
       "value": "-100"
     },
-    "FORCE_SUB_CHANNEL1": {
-      "description": "Masukan ID dari Channel Atau Group Untuk Wajib Subscribenya",
-      "value": "-100"
+    "PROTECT_CONTENT": {
+      "description": "Untuk Mencegah pengguna bot untuk mendownload/memforward/mengscreenshot konten yang dikirim di bot [ Bila ingin diaktifkan ubah ke True ]",
+      "value": "False"
     },
-    "FORCE_SUB_CHANNEL2": {
-      "description": "Masukan ID dari Channel Atau Group Untuk Wajib Subscribenya",
-      "value": "-100"
+    "FORCE_SUB_CHANNEL": {
+      "description": "Masukan ID dari Channel Atau Group Untuk Wajib Subscribenya, Bila tidak ingin dipakai Fsubnya, isi dengan 0",
+      "value": "0"
     },
-    "FORCE_SUB_CHANNEL3": {
-      "description": "Masukan ID dari Channel Atau Group Untuk Wajib Subscribenya",
-      "value": "-100"
+    "FORCE_SUB_GROUP": {
+      "description": "Masukan ID dari Group Untuk Wajib Subscribenya, Bila tidak ingin dipakai Fsubnya, isi dengan 0",
+      "value": "0"
     },
-    "FORCE_SUB_CHANNEL4": {
-      "description": "Masukan ID dari Channel Atau Group Untuk Wajib Subscribenya",
-      "value": "-100"
+    "FORCE_SUB_CHANNEL_2": {
+      "description": "Masukan ID dari Channel Atau Group Kedua Untuk Wajib Subscribenya, Bila tidak ingin dipakai Fsubnya, isi dengan 0",
+      "value": "0"
+    },
+    "FORCE_SUB_GROUP_2": {
+      "description": "Masukan ID dari Group Kedua Untuk Wajib Subscribenya, Bila tidak ingin dipakai Fsubnya, isi dengan 0",
+      "value": "0"
     },
     "START_MESSAGE": {
       "description": "Pesan /start memulai awalan ke bot, Gunakan format parsemode HTML",
@@ -62,7 +62,7 @@
     "FORCE_SUB_MESSAGE": {
       "description": "Pesan Paksa Subscribe bot, Gunakan Format parsemode HTML",
       "value": "<b>Hello {first}\n\nAnda harus bergabung di Channel/Grup saya untuk menggunakan saya\n\nSilakan Join Ke Channel Terlebih Dahulu</b>"
-   } 
+    }
   },
   "addons": [
     {
