@@ -17,12 +17,8 @@ async def subschannel(filter, client, update):
     if user_id in ADMINS:
         return True
     try:
-        member = await client.get_chat_member(
-            chat_id=FORCE_SUB_CHANNEL, user_id=user_id
-        )
-        member2 = await client.subschannel2(
-            chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id
-        )
+        member = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL, user_id=user_id)
+        member2 = await client.subschannel2(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
     except UserNotParticipant:
         return False
 
@@ -59,34 +55,35 @@ async def is_subscribed(filter, client, update):
     if user_id in ADMINS:
         return True
     try:
-        member = await client.get_chat_member(chat_id=FORCE_SUB_GROUP, user_id=user_id)
-        member2 = await client.subschannel2(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
+        member_channel = await client.get_chat_member(chat_id=FORCE_SUB_CHANNEL, user_id=user_id)
+        member_channel2 = await client.subschannel2(chat_id=FORCE_SUB_CHANNEL_2, user_id=user_id)
     except UserNotParticipant:
         return False
     try:
-        member = await client.get_chat_member(
-            chat_id=FORCE_SUB_CHANNEL, user_id=user_id
-        )
-        member2 = await client.subsgroup2(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
+        member_group = await client.get_chat_member(chat_id=FORCE_SUB_GROUP, user_id=user_id)
+        member_group2 = await client.subsgroup2(chat_id=FORCE_SUB_GROUP_2, user_id=user_id)
     except UserNotParticipant:
         return False
 
     return (
-        member.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
-        or member2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+        member_channel.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+        or member_channel2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+        or member_group.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
+        or member_group2.status in [ChatMemberStatus.OWNER, ChatMemberStatus.ADMINISTRATOR, ChatMemberStatus.MEMBER]
     )
 
 
 async def encode(string):
     string_bytes = string.encode("ascii")
     base64_bytes = base64.urlsafe_b64encode(string_bytes)
-    base64_string = (base64_bytes.decode("ascii")).strip("=")
+    base64_string = base64_bytes.decode("ascii").rstrip("=")
     return base64_string
 
+
 async def decode(base64_string):
-    base64_string = base64_string.strip("=") 
-    base64_bytes = (base64_string + "=" * (-len(base64_string) % 4)).encode("ascii")
-    string_bytes = base64.urlsafe_b64decode(base64_bytes) 
+    base64_string = base64_string + "=" * (4 - len(base64_string) % 4)
+    base64_bytes = base64_string.encode("ascii")
+    string_bytes = base64.urlsafe_b64decode(base64_bytes)
     string = string_bytes.decode("ascii")
     return string
 
@@ -95,7 +92,7 @@ async def get_messages(client, message_ids):
     messages = []
     total_messages = 0
     while total_messages != len(message_ids):
-        temb_ids = message_ids[total_messages : total_messages + 200]
+        temb_ids = message_ids[total_messages: total_messages + 200]
         try:
             msgs = await client.get_messages(
                 chat_id=client.db_channel.id, message_ids=temb_ids
