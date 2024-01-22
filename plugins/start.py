@@ -4,6 +4,7 @@
 # Kalo clone Gak usah hapus 
 # gue tandain akun tele nya ngentod
 
+
 import asyncio
 from datetime import datetime
 from time import time
@@ -93,19 +94,19 @@ async def start_command(client: Bot, message: Message):
 
             if bool(CUSTOM_CAPTION) & bool(msg.document):
                 caption = CUSTOM_CAPTION.format(
-                    previouscaption=msg.caption if msg.caption else "",
+                    previouscaption=msg.caption.html if msg.caption else "",
                     filename=msg.document.file_name,
                 )
 
             else:
-                caption = msg.caption if msg.caption else ""
+                caption = msg.caption.html if msg.caption else ""
 
             reply_markup = msg.reply_markup if DISABLE_CHANNEL_BUTTON else None
             try:
                 await msg.copy(
                     chat_id=message.from_user.id,
                     caption=caption,
-                    parse_mode=None,  # Remove parse_mode "html"
+                    parse_mode="html",
                     protect_content=PROTECT_CONTENT,
                     reply_markup=reply_markup,
                 )
@@ -115,7 +116,7 @@ async def start_command(client: Bot, message: Message):
                 await msg.copy(
                     chat_id=message.from_user.id,
                     caption=caption,
-                    parse_mode=None,  # Remove parse_mode "html"
+                    parse_mode="html",
                     protect_content=PROTECT_CONTENT,
                     reply_markup=reply_markup,
                 )
@@ -124,8 +125,8 @@ async def start_command(client: Bot, message: Message):
     else:
         buttons = [
                 [
-                    InlineKeyboardButton("Cara Penggunaan", callback_data="help"),
-                    InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data="close")
+                    InlineKeyboardButton("Cara Penggunaan", callback_data = "help"),
+                    InlineKeyboardButton("ᴄʟᴏsᴇ", callback_data = "close")
                 ]
             ]
         await message.reply_text(
@@ -146,6 +147,8 @@ async def start_command(client: Bot, message: Message):
     return
 
 
+    
+    
 @Bot.on_message(filters.command("start") & filters.private)
 async def not_joined(client: Client, message: Message):
     buttons = [
@@ -205,16 +208,19 @@ async def send_text(client: Bot, message: Message):
         blocked = 0
         deleted = 0
         unsuccessful = 0
-        for user in await full_userbase():
+
+        pls_wait = await message.reply(
+            "<code>Broadcasting Message Tunggu Sebentar...</code>"
+        )
+        for row in query:
+            chat_id = int(row[0])
             try:
-                if query not in [
-                    i["message_id"] for i in await message.client.get_messages(user)
-                ]:
-                    await broadcast_msg.copy(user)
-                    successful += 1
-                    await asyncio.sleep(3)
-                else:
-                    deleted += 1
+                await broadcast_msg.copy(chat_id)
+                successful += 1
+            except FloodWait as e:
+                await asyncio.sleep(e.x)
+                await broadcast_msg.copy(chat_id)
+                successful += 1
             except UserIsBlocked:
                 blocked += 1
             except InputUserDeactivated:
@@ -222,59 +228,46 @@ async def send_text(client: Bot, message: Message):
             except BaseException:
                 unsuccessful += 1
             total += 1
-        await message.reply_text(
-            f"Broadcast Selesai\nTotal Pengguna: {total}\n"
-            f"Berhasil: {successful}\nGagal: {unsuccessful}\n"
-            f"Diblokir: {blocked}\nPesan sudah terkirim: {deleted}"
-        )
+
+        status = f"""<b><u>Berhasil Broadcast</u>
+Jumlah Pengguna: <code>{total}</code>
+Berhasil: <code>{successful}</code>
+Gagal: <code>{unsuccessful}</code>
+Pengguna diblokir: <code>{blocked}</code>
+Akun Terhapus: <code>{deleted}</code></b>"""
+
+        return await pls_wait.edit(status)
+
     else:
-        await message.reply_text(
-            "Balas pesan yang ingin Anda kirim sebagai broadcast."
+        msg = await message.reply(
+            "<code>Gunakan Perintah ini Harus Sambil Reply ke pesan telegram yang ingin di Broadcast.</code>"
         )
+        await asyncio.sleep(8)
+        await msg.delete()
 
 
-@Bot.on_message(filters.private & filters.command("status") & filters.user(ADMINS))
-async def get_status(client: Bot, message: Message):
-    uptime = await _human_time_duration(time() - client.start_time)
-    await message.reply_text(
-        text=f"**Bot Uptime:** `{uptime}`\n"
-        f"**Userbot Online Sejak:** `{START_TIME_ISO}`"
+@Bot.on_message(filters.command("ping"))
+async def ping_pong(client, m: Message):
+    start = time()
+    current_time = datetime.utcnow()
+    uptime_sec = (current_time - START_TIME).total_seconds()
+    uptime = await _human_time_duration(int(uptime_sec))
+    m_reply = await m.reply_text("Pinging...")
+    delta_ping = time() - start
+    await m_reply.edit_text(
+        "<b>PONG!!</b>🏓 \n"
+        f"<b>• Pinger -</b> <code>{delta_ping * 1000:.3f}ms</code>\n"
+        f"<b>• Uptime -</b> <code>{uptime}</code>\n"
     )
 
 
-@Bot.on_message(filters.command("help") & filters.private & subscribed)
-async def help_command(client: Bot, message: Message):
-    buttons = [
-                [
-                    InlineKeyboardButton("•ᴄʟᴏsᴇ•", callback_data="close")
-                ]
-            ]
-    await message.reply_text(
-        text=f"{client.username} Userbot Help\n\n"
-        "Commands:\n"
-        "- /start: Memulai Userbot\n"
-        "- /broadcast: Mengirim broadcast ke semua pengguna bot\n"
-        "- /status: Menampilkan status Userbot\n"
-        "- /users: Menampilkan jumlah pengguna bot\n"
-        "- /help: Menampilkan pesan bantuan ini\n\n"
-        "Note:\n"
-        "- Gunakan dengan bijak, jangan spam broadcast\n"
-        "- Bot akan menandai pesan broadcast untuk menghindari duplikasi\n"
-        "- Dibuat oleh @Mafia_Tobatz\n",
-        reply_markup=InlineKeyboardMarkup(buttons),
-        disable_web_page_preview=True,
-    )
-
-
-@Bot.on_message(filters.command("help") & filters.private)
-async def not_subscribed(client: Bot, message: Message):
-    buttons = [
-                [
-                    InlineKeyboardButton("•ᴊᴏɪɴ ɴᴏᴡ•", url="https://t.me/CodexBotZ"),
-                ]
-            ]
-    await message.reply_text(
-        text="Silakan bergabung dengan saluran untuk menggunakan Userbot ini.\n\n"
-        "Bergabung sekarang dan nikmati layanan kami!",
-        reply_markup=InlineKeyboardMarkup(buttons),
+@Bot.on_message(filters.command("uptime"))
+async def get_uptime(client, m: Message):
+    current_time = datetime.utcnow()
+    uptime_sec = (current_time - START_TIME).total_seconds()
+    uptime = await _human_time_duration(int(uptime_sec))
+    await m.reply_text(
+        "🤖 <b>Bot Status:</b>\n"
+        f"• <b>Uptime:</b> <code>{uptime}</code>\n"
+        f"• <b>Start Time:</b> <code>{START_TIME_ISO}</code>"
     )
