@@ -9,13 +9,13 @@ def start_button(client):
     buttons = []
 
     if FORCE_SUB_CHANNEL:
-        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink)])
     if FORCE_SUB_GROUP:
-        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink2)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink2)])
     if FORCE_SUB_CHANNEL_2:
-        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink3)])
     if FORCE_SUB_GROUP_2:
-        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
 
     buttons.extend([
         [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help")],
@@ -28,20 +28,20 @@ def fsub_button(client, message):
     buttons = []
 
     if FORCE_SUB_CHANNEL and FORCE_SUB_GROUP:
-        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink),
-                        InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink),
+                        InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink2)])
     elif FORCE_SUB_CHANNEL:
-        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ᴄʜᴀɴɴᴇʟ", url=client.invitelink)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink)])
     elif FORCE_SUB_GROUP:
-        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ ɢʀᴏᴜᴘ", url=client.invitelink2)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink2)])
 
     if FORCE_SUB_CHANNEL_2 and FORCE_SUB_GROUP_2:
-        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3),
-                        InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink3),
+                        InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
     elif FORCE_SUB_CHANNEL_2:
-        buttons.append([InlineKeyboardButton(text="ᴄʜᴀɴɴᴇʟ", url=client.invitelink3)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink3)])
     elif FORCE_SUB_GROUP_2:
-        buttons.append([InlineKeyboardButton(text="ɢʀᴏᴜᴘ", url=client.invitelink4)])
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
 
     buttons.extend([
         [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
