@@ -4,7 +4,7 @@ import re
 
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
-from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
+from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, FloodWait
 
 from config import ADMINS, FORCE_SUB_CHANNEL, FORCE_SUB_GROUP, FORCE_SUB_CHANNEL_2, FORCE_SUB_GROUP_2
 
@@ -112,10 +112,11 @@ async def encode(string):
     base64_string = (base64_bytes.decode("ascii")).strip("=")
     return base64_string
 
+
 async def decode(base64_string):
-    base64_string = base64_string.strip("=") 
+    base64_string = base64_string.strip("=")
     base64_bytes = (base64_string + "=" * (-len(base64_string) % 4)).encode("ascii")
-    string_bytes = base64.urlsafe_b64decode(base64_bytes) 
+    string_bytes = base64.urlsafe_b64decode(base64_bytes)
     string = string_bytes.decode("ascii")
     return string
 
@@ -165,6 +166,6 @@ async def get_message_id(client, message):
 
 subsgc = filters.create(subsgroup)
 subsch = filters.create(subschannel)
-subsgc2 = filters.create(subsgroup2)  # Tambahkan filter untuk FORCE_SUB_GROUP_2
-subsch2 = filters.create(subschannel2)  # Tambahkan filter untuk FORCE_SUB_CHANNEL_2
+subsgc2 = filters.create(subsgroup2)
+subsch2 = filters.create(subschannel2)
 subsall = filters.create(is_subscribed)
