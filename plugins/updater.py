@@ -1,17 +1,12 @@
-# Credits: @mrismanaziz
-# FROM File-Sharing-Man <https://github.com/mrismanaziz/File-Sharing-Man/>
-# t.me/SharingUserbot & t.me/Lunatic0de
-
 import os
 import sys
-from os import environ, execle, system
-
+import subprocess
+from os import environ, execle
 from bot import Bot
 from git import Repo
 from git.exc import InvalidGitRepositoryError
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
 from config import ADMINS, LOGGER
 
 UPSTREAM_REPO = "https://github.com/reasupport/4tombol"
@@ -22,8 +17,8 @@ def gen_chlog(repo, diff):
     ac_br = repo.active_branch.name
     ch_log = ""
     tldr_log = ""
-    ch = f"<b>updates for <a href={upstream_repo_url}/tree/{ac_br}>[{ac_br}]</a>:</b>"
-    ch_tl = f"updates for {ac_br}:"
+    ch = f"<b>perbaruan untuk <a href={upstream_repo_url}/tree/{ac_br}>[{ac_br}]</a>:</b>"
+    ch_tl = f"perbaruan untuk {ac_br}:"
     d_form = "%d/%m/%y || %H:%M"
     for c in repo.iter_commits(diff):
         ch_log += (
@@ -52,22 +47,28 @@ def updater():
     else:
         ups_rem = repo.create_remote("upstream", UPSTREAM_REPO)
     ups_rem.fetch(ac_br)
-    changelog, tl_chnglog = gen_chlog(repo, f"HEAD..upstream/{ac_br}")
+    changelog, tl_chnglog = gen_chlog(repo, f"main..upstream/{ac_br}")
     return bool(changelog)
 
 
 @Bot.on_message(filters.command("update") & filters.user(ADMINS))
 async def update_bot(_, message: Message):
     message.chat.id
-    msg = await message.reply_text("Checking updates...")
-    update_avail = updater()
-    if update_avail:
-        await msg.edit("✅ Update finished !")
-        system("git pull -f && pip3 install --no-cache-dir -r requirements.txt")
-        execle(sys.executable, sys.executable, "main.py", environ)
+    msg = await message.reply_text("Memeriksa pembaruan...")
+    try:
+        update_avail = updater()
+        if update_avail:
+            await msg.edit("✅ Pembaruan selesai!")
+            subprocess.run(["git", "pull", "-f"])
+            subprocess.run(["pip3", "install", "--no-cache-dir", "-r", "requirements.txt"])
+            execle(sys.executable, sys.executable, "main.py", environ)
+            return
+    except Exception as e:
+        await msg.edit(f"❌ Pembaruan gagal: {str(e)}")
         return
+
     await msg.edit(
-        f"Bot  Sudah Yang Terbaru dari @ReaSupport ^^)",
+        f"Bot sudah diperbarui dari @ReaSupport ^^)",
         disable_web_page_preview=True,
     )
 
@@ -75,10 +76,10 @@ async def update_bot(_, message: Message):
 @Bot.on_message(filters.command("restart") & filters.user(ADMINS))
 async def restart_bot(_, message: Message):
     try:
-        msg = await message.reply_text("`Restarting bot...`")
-        LOGGER(__name__).info("BOT SERVER RESTARTED !!")
+        msg = await message.reply_text("`Merestart bot...`")
+        LOGGER(__name__).info("SERVER BOT DIRESTART !!")
     except BaseException as err:
         LOGGER(__name__).info(f"{err}")
         return
-    await msg.edit_text("✅ Bot has restarted !\n\n")
+    await msg.edit_text("✅ Bot telah direstart!\n\n")
     os.system(f"kill -9 {os.getpid()} && bash start")
