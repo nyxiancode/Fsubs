@@ -15,7 +15,7 @@ Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link K
 ### Installation
 
 ### Deploy on Heroku
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://rea.my.id/deploy.html)</br>
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://rea.skom.id/deploy.html)</br>
 
 
 
