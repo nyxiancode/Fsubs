@@ -23,6 +23,14 @@
       "description": "Masukan User ID untuk mendapatkan hak Admin di BOT [ Gunakan Spasi Untuk Pemisah User ID ]",
       "value": "0"
     },
+    "HEROKU_API_KEY": {
+      "description": "Masukan Nama App Yang Kalian Buat [ ( . Y . ) ]",
+      "value": "0"
+    },
+    "HEROKU_APP_NAME": {
+      "description": "Masukan Heroku Api Key [ Lihat Di Pengaturan Akun Heroku ]",
+      "value": "0"
+    },
     "APP_ID": {
       "description": "Dapatkan APP ID di web my.telegram.org",
       "value": "6"
