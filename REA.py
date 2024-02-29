@@ -23,7 +23,7 @@ class Data:
  ├ /speedtest - Untuk Mengetes kecepatan server bot
  └ /broadcast - Untuk mengirim pesan broadcast ke pengguna bot
 
-👨‍💻 Develoved by </b><a href='https://t.me/ReaSupport'><b>ReaSupport</b></a>
+👨‍💻 Develoved by </b><a href='https://t.me/AlteregoNetwork'><b>AlteregoNetwork</b></a>
 
 
 """
@@ -57,5 +57,5 @@ class Data:
 
  Ingin membuat Bot seperti ini chat @SayaKyu
  
-👨‍💻 Develoved by </b><a href='https://t.me/ReaSupport'>ReaSupport</a>
+👨‍💻 Develoved by </b><a href='https://t.me/AlteregoNetwork'>AlteregoNetwork</a>
 """
