@@ -15,7 +15,6 @@ class Data:
  
  ❏ Perintah Untuk Admin BOT
  ├ /logs - Untuk melihat logs bot
- ├ /setvar - Untuk mengatur var dengan command dibot
  ├ /delvar - Untuk menghapus var dengan command dibot
  ├ /getvar - Untuk melihat salah satu var dengan command dibot
  ├ /users - Untuk melihat statistik pengguna bot
@@ -55,7 +54,7 @@ class Data:
  • Framework: <a href='https://docs.pyrogram.org'>Pyrogram</a>
 
 
- Ingin membuat Bot seperti ini chat @SayaKyu
- 
+ • Ingin membuat Bot seperti ini chat @SayaKyu
+ • Promo Telegram Premium di @AlteegoNetwork
 👨‍💻 Develoved by </b><a href='https://t.me/AlteregoNetwork'>AlteregoNetwork</a>
 """
