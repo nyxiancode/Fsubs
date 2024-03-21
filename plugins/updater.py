@@ -9,7 +9,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import ADMINS, LOGGER
 
-UPSTREAM_REPO = "https://github.com/reasupport/4tombol"
+UPSTREAM_REPO = "https://github.com/alteregocodes/4tombol"
 
 
 def gen_chlog(repo, diff):
