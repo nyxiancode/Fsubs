@@ -8,12 +8,14 @@ from pyrogram.types import InlineKeyboardButton
 def start_button(client):
     buttons = []
 
-    if FORCE_SUB_CHANNEL:
-        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink),
-                        InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink3)])
-    if FORCE_SUB_GROUP:
-        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink2),
-                        InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
+    if FORCE_SUB_CHANNEL and FORCE_SUB_CHANNEL != 0:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink)])
+    if FORCE_SUB_GROUP and FORCE_SUB_GROUP != 0:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink2)])
+    if FORCE_SUB_CHANNEL_2 and FORCE_SUB_CHANNEL_2 != 0:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink3)])
+    if FORCE_SUB_GROUP_2 and FORCE_SUB_GROUP_2 != 0:
+        buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
 
     buttons.extend([
         [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help")],
