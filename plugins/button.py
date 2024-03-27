@@ -17,12 +17,28 @@ def start_button(client):
     if FORCE_SUB_GROUP_2 and FORCE_SUB_GROUP_2 != 0:
         buttons.append([InlineKeyboardButton(text="ᴊᴏɪɴ💤", url=client.invitelink4)])
 
-    buttons.extend([
+    # Arrange buttons
+    arranged_buttons = []
+
+    # If FORCE_SUB_GROUP_2 is 0, arrange buttons accordingly
+    if FORCE_SUB_GROUP_2 == 0:
+        if buttons:
+            arranged_buttons.append(buttons.pop(0))
+            if buttons:
+                arranged_buttons[0].extend(buttons.pop(0))
+        if buttons:
+            arranged_buttons.extend(buttons)
+
+    # If FORCE_SUB_GROUP_2 is not 0, no special arrangement needed
+    else:
+        arranged_buttons = buttons
+
+    arranged_buttons.extend([
         [InlineKeyboardButton(text="ʜᴇʟᴘ & ᴄᴏᴍᴍᴀɴᴅs", callback_data="help")],
         [InlineKeyboardButton(text="ᴛᴜᴛᴜᴘ", callback_data="close")],
     ])
 
-    return buttons
+    return arranged_buttons
 
 def fsub_button(client, message):
     buttons = []
