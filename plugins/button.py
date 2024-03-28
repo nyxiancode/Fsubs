@@ -1,7 +1,3 @@
-# Credits: @mrismanaziz & @Kutmut_Id
-# FROM File-Sharing-Man <https://github.com/mrismanaziz/File-Sharing-Man/>
-# t.me/SharingUserbot & t.me/Lunatic0de
-
 from config import FORCE_SUB_CHANNEL, FORCE_SUB_GROUP, FORCE_SUB_CHANNEL_2, FORCE_SUB_GROUP_2
 from pyrogram.types import InlineKeyboardButton
 
