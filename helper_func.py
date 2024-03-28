@@ -10,7 +10,7 @@ from config import ADMINS, FORCE_SUB_CHANNEL, FORCE_SUB_GROUP, FORCE_SUB_CHANNEL
 
 async def subschannel(filter, client, update):
     if FORCE_SUB_CHANNEL == 0 and FORCE_SUB_CHANNEL_2 == 0:
-        return False
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
@@ -32,7 +32,7 @@ async def subschannel(filter, client, update):
 
 async def subsgroup(filter, client, update):
     if FORCE_SUB_GROUP == 0 and FORCE_SUB_GROUP_2 == 0:
-        return False
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
@@ -50,7 +50,7 @@ async def subsgroup(filter, client, update):
 
 async def subschannel2(filter, client, update):
     if FORCE_SUB_CHANNEL_2 == 0:
-        return False
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
@@ -66,7 +66,7 @@ async def subschannel2(filter, client, update):
 
 async def subsgroup2(filter, client, update):
     if FORCE_SUB_GROUP_2 == 0:
-        return False
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
@@ -80,9 +80,9 @@ async def subsgroup2(filter, client, update):
 
 async def is_subscribed(filter, client, update):
     if FORCE_SUB_CHANNEL == 0 and FORCE_SUB_CHANNEL_2 == 0:
-        return False
+        return True
     if FORCE_SUB_GROUP == 0 and FORCE_SUB_GROUP_2 == 0:
-        return False
+        return True
     user_id = update.from_user.id
     if user_id in ADMINS:
         return True
