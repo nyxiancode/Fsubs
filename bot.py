@@ -5,16 +5,13 @@
 import pyromod.listen
 import sys
 
-from pyrogram import Client, filters, enums
+from pyrogram import Client, enums
 
 from config import (
     API_HASH,
     APP_ID,
     CHANNEL_ID,
-    FORCE_SUB_CHANNEL,
-    FORCE_SUB_GROUP,
-    FORCE_SUB_CHANNEL_2,
-    FORCE_SUB_GROUP_2,
+    FORCE_SUB,
     LOGGER,
     OWNER,
     TG_BOT_TOKEN,
@@ -46,46 +43,33 @@ class Bot(Client):
         except Exception as a:
             self.LOGGER(__name__).warning(a)
             self.LOGGER(__name__).info(
-                "Bot Berhenti. Gabung Group https://t.me/SharingUserbot untuk Bantuan"
+                "Bot Berhenti. Gabung Group https://t.me/AlteregoNetwork untuk Bantuan"
             )
             sys.exit()
 
-        try:
-            if FORCE_SUB_CHANNEL:
-                info = await self.get_chat(FORCE_SUB_CHANNEL)
-                link = await self.export_chat_invite_link(info.id)
-                self.invitelink = link
+        for key, channel_id in FORCE_SUB.items():
+            try:
+                info = await self.get_chat(channel_id)
+                link = info.invite_link
+                if not link:
+                    await self.export_chat_invite_link(channel_id)
+                    link = info.invite_link
+                setattr(self, f"invitelink{key}", link)
                 self.LOGGER(__name__).info(
-                    f"FORCE_SUB_CHANNEL detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
+                    f"FORCE_SUB{key} detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
                 )
-            if FORCE_SUB_GROUP:
-                info = await self.get_chat(FORCE_SUB_GROUP)
-                link = await self.export_chat_invite_link(info.id)
-                self.invitelink2 = link
+            except Exception as a:
+                self.LOGGER(__name__).warning(a)
+                self.LOGGER(__name__).warning(
+                    f"Bot tidak dapat Mengambil link invite dari FORCE_SUB{key}!"
+                )
+                self.LOGGER(__name__).warning(
+                    f"Pastikan @{self.username} adalah admin di Channel Tersebut, Chat ID untuk FORCE_SUB{key}: {channel_id}"
+                )
                 self.LOGGER(__name__).info(
-                    f"FORCE_SUB_GROUP detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
+                    "Bot Berhenti. Gabung Channel https://t.me/AlteregoNetwork untuk Bantuan"
                 )
-            if FORCE_SUB_CHANNEL_2:
-                info = await self.get_chat(FORCE_SUB_CHANNEL_2)
-                link = await self.export_chat_invite_link(info.id)
-                self.invitelink3 = link
-                self.LOGGER(__name__).info(
-                    f"FORCE_SUB_CHANNEL_2 detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
-                )
-            if FORCE_SUB_GROUP_2:
-                info = await self.get_chat(FORCE_SUB_GROUP_2)
-                link = await self.export_chat_invite_link(info.id)
-                self.invitelink4 = link
-                self.LOGGER(__name__).info(
-                    f"FORCE_SUB_GROUP_2 detected!\n┌ Title: {info.title}\n└ Chat ID: {info.id}\n——"
-                )
-        except Exception as a:
-            self.LOGGER(__name__).warning(a)
-            self.LOGGER(__name__).warning("Bot tidak dapat mengambil link invite!")
-            self.LOGGER(__name__).info(
-                "Bot Berhenti. Gabung Group https://t.me/SharingUserbot untuk Bantuan"
-            )
-            sys.exit()
+                sys.exit()
 
         try:
             db_channel = await self.get_chat(CHANNEL_ID)
@@ -101,13 +85,13 @@ class Bot(Client):
                 f"Pastikan @{self.username} adalah admin di Channel DataBase anda, CHANNEL_ID Saat Ini: {CHANNEL_ID}"
             )
             self.LOGGER(__name__).info(
-                "Bot Berhenti. Gabung Group https://t.me/SharingUserbot untuk Bantuan"
+                "Bot Berhenti. Gabung Group https://t.me/AlteregoNetwork untuk Bantuan"
             )
             sys.exit()
 
         self.set_parse_mode(enums.ParseMode.HTML)
         self.LOGGER(__name__).info(
-            f"[🔥 BERHASIL DIAKTIFKAN! 🔥]\n\nBOT Dibuat oleh @{OWNER}\nJika @{OWNER} Membutuhkan Bantuan, Silahkan Tanyakan di Grup https://t.me/SharingUserbot"
+            f"[🔥 BERHASIL DIAKTIFKAN! 🔥]\n\nBOT Dibuat oleh @{OWNER}\nJika @{OWNER} Membutuhkan Bantuan, Silahkan Tanyakan di chat https://t.me/SayaKyu"
         )
 
     async def stop(self, *args):
