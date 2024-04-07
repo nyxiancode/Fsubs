@@ -1,8 +1,8 @@
-# File-Sharing 4 Button
+# Fsub
 
 Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link Khusus.
 
-<img src="https://telegra.ph/file/767a8576f4f688fb5cb44.png">
+<img src="https://kutmut.my.id/logop.png">
 
 
 ### Setup Repo ini join 4 ch ngentod
@@ -15,7 +15,7 @@ Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link K
 ### Installation
 
 ### Deploy on Heroku
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://rea.skom.id/deploy)</br>
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://kutmut.my.id/deploy)</br>
 
 
 
