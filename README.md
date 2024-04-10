@@ -22,10 +22,10 @@ Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link K
 
 #### Deploy in your VPS
 ````bash
-git clone https://github.com/reasupport/4tombol
+git clone https://github.com/altercodes/Fsubs
 ````
 ````bash
-cd 4tombol
+cd Fsubs
 ````
 ````bash
 pip3 install -r requirements.txt
@@ -62,10 +62,10 @@ python3 main.py
 * `ADMINS` Masukan User ID untuk mendapatkan hak Admin BOT [Hanya dapat membuat link]
 * `START_MESSAGE` Opsional: Pesan /start memulai awalan ke bot, Gunakan <a href='https://github.com/mrismanaziz/File-Sharing-Man/blob/main/README.md#start_message'>format</a> parsemode HTML 
 * `FORCE_SUB_MESSAGE` Opsional: Pesan Paksa Subscribe bot, Gunakan Format parsemode HTML
-* `FORCE_SUB_CHANNEL_1` Masukan ID dari Channel Untuk Wajib Subscribenya
-* `FORCE_SUB_CHANNEL_2` Masukan ID dari Channel Untuk Wajib Subscribenya
-* `FORCE_SUB_CHANNEL_3` Masukan ID dari Channel Untuk Wajib Subscribenya
-* `FORCE_SUB_CHANNEL_4` Masukan ID dari Channel Untuk Wajib Subscribenya
+* `FORCE_SUB1` Masukan ID dari Channel Untuk Wajib Subscribenya
+* `FORCE_SUB2` Masukan ID dari Channel Untuk Wajib Subscribenya
+* `FORCE_SUB3` Masukan ID dari Channel Untuk Wajib Subscribenya
+* `FORCE_SUB4` Masukan ID dari Channel Untuk Wajib Subscribenya
 ### Extra Variables
 
 * `CUSTOM_CAPTION` letakkan teks teks Kustom Anda jika Anda ingin Mengatur Teks Kustom, Anda dapat menggunakan HTML dan <a href='https://github.com/mrismanaziz/File-Sharing-Man/blob/main/README.md#custom_caption'>fillings</a> untuk pemformatan (hanya untuk dokumen)
