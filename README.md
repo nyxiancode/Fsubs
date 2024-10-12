@@ -2,7 +2,7 @@
 
 Bot Telegram untuk menyimpan Posting atau File yang dapat Diakses melalui Link Khusus.
 
-<img src="https://kutmut.my.id/logop.png">
+<img src="https://files.catbox.moe/ha6pd0.png">
 
 
 ### Setup Repo ini join 4 ch ngentod
